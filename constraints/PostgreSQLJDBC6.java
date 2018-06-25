@@ -1,22 +1,15 @@
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PostgreSQLJDBC6 {
-    public String dbName = "temp";
-    public String port = "5432";
-    public String usrName = "postgres";
-    public String psw = "123";
 
 
-    public Connection connectDB() {
+    public Connection connectDB(String address,String port,String dbName, String usrName, String psw ) {
         Connection c = null;
         try {
             Class.forName("org.postgresql.Driver");
-            c = DriverManager.getConnection("jdbc:postgresql://localhost:" + port + "/" + dbName, usrName, psw);
+            c = DriverManager.getConnection("jdbc:postgresql://" + address + ":" + port + "/" + dbName, usrName, psw);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -57,4 +50,64 @@ public class PostgreSQLJDBC6 {
         }
         return tableMap;
     }
+
+    public ArrayList<String> listDbName(Connection c){
+        ArrayList<String> dbLst = new ArrayList<>();
+        ResultSet rs = null;
+        Statement stmt;
+        String sql = "SELECT datname FROM pg_database WHERE datistemplate = false";
+        try {
+            stmt = c.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                System.out.println(rs.getString(1));
+                dbLst.add(rs.getString(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return  dbLst;
+    }
+
+
+    public ResultSet execute(Connection c,String sql,Boolean isQuery) throws SQLException {
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = c.createStatement();
+            sql = sql.trim();
+            System.out.println(sql);
+            if (sql != null && !sql.equals("")) {
+                if (isQuery) {
+                    rs = stmt.executeQuery(sql);
+                    return rs;
+                }else{
+                    stmt.execute(sql);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                    rs = null;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                    stmt = null;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
 }
