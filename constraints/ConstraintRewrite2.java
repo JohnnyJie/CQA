@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 
 public class ConstraintRewrite2 {
+
     private ArrayList<TableStru> tableList = new ArrayList<>();
     private ArrayList<ConditionStru> condintionLst = new ArrayList();
     private HashMap<String,ArrayList<String>> symbolMap = new HashMap<>();
@@ -195,130 +196,123 @@ public class ConstraintRewrite2 {
     /*******
      *
      * @param tableMap
-     * @param queryTbs
+     * @param
      * @return ArrayList<String[queryTbName, sql , attName1,attName2...]>
      * @throws SQLException
      */
-    public ArrayList<String[]> rewrite( HashMap<String,ArrayList> tableMap, ArrayList<String> queryTbs) throws SQLException {
-        ArrayList<String[]> sqlLst = new ArrayList<>();
-        for(String queryTb: queryTbs) {
-            /**********
-             rewrite the constraints into sql for every table
-             ***********/
-            String sql = "SELECT DISTINCT * FROM ";
-            String queryTbNickName = "";
-            HashMap tbRecord = new HashMap();
-            int count = 0;
-            for (TableStru tableStru : tableList) {
-                String tbName = tableStru.getTableName();
-                String nickName = "TB" + count;
-                if(tbName.replaceAll("'","").equals(queryTb))
-                    queryTbNickName = nickName;
-                tbRecord.put(nickName, tbName);
-                sql += tbName.replaceAll("'", "") + " AS " + nickName + " ,";
-                count++;
-            }
-            if(queryTbNickName.equals(""))
-                break; // if no constraint
+    public String[] rewrite( HashMap<String,ArrayList> tableMap) throws SQLException {
 
-            sql = sql.replaceAll("\\*",queryTbNickName + ".*");
-            sql = sql.substring(0, sql.length() - 1); //remove the last ","
-            sql += " WHERE ";
 
-            //rewrite the equality by finding the same symbol
-            ArrayList<String> attNameLst = new ArrayList<>(); //record the attributes name which has equal attribute in different table
-
-            for (Map.Entry entry : symbolMap.entrySet()) {
-                // iteratively find regarding tables when a symbol has more than 2 tables using it (c -> reader,reader')
-                if (((ArrayList<String>) entry.getValue()).size() >= 2) {
-
-                    ArrayList<String> nickNameLst = new ArrayList<>(); //record the nick name of the name
-                    for (String tbName : ((ArrayList<String>) entry.getValue())) {
-                        int index = 0;
-                        for (TableStru tableStru : tableList) {
-                            if (tableStru.getTableName().equals(tbName)) {
-                                index = tableStru.getAttList().indexOf(entry.getKey());  // c -> 2 ("rid" is the 3rd attribute of reader table)
-                                break;
-                            }
-                        }
-
-                        String realTbName = tbName.replaceAll("'", "");
-                        if(!attNameLst.contains( tableMap.get(realTbName).get(index))){
-                            attNameLst.add(((ArrayList<String>) tableMap.get(realTbName)).get(index));
-                        }
-                        //find the attribute name and add (c -> 2 --(reader)-> rid)
-                        for (Object entry2 : tbRecord.entrySet()) {
-                            if ((((Map.Entry) entry2).getValue()).equals(tbName)) {
-                                nickNameLst.add((String) ((Map.Entry) entry2).getKey());
-                            }
-                        }
-                    }
-
-                    //start rewrite the equal condition
-                    for (int i = 0; i < attNameLst.size(); i++) {
-                        if (i == 0) continue;
-                        sql += nickNameLst.get(i - 1) + "." + attNameLst.get(i - 1) + " = "
-                                + nickNameLst.get(i) + "." + attNameLst.get(i) + " AND ";
-                    }
-                }
-            }
-
-            // rewrite the condition parts : a=g,...
-
-            for (ConditionStru conditionStru : condintionLst) {
-                String leftTerm = conditionStru.getLeftTerm();
-                String rightTerm = conditionStru.getRightTerm();
-
-                int leftIndex = 0;
-                int rightIndex = 0;
-
-                String leftTbName = (symbolMap.get(leftTerm)).get(0); // only need 1 regarding table
-                String rightTbName = (symbolMap.get(rightTerm)).get(0); // only need 1 regarding table
-
-                for (TableStru tableStru : tableList) {
-                    if (tableStru.getTableName().equals(leftTbName)) {
-                        leftIndex = tableStru.getAttList().indexOf(leftTerm);  // c -> 2 ("rid" is the 3rd attribute of reader table)
-                        break;
-                    }
-                }
-                for (TableStru tableStru : tableList) {
-                    if (tableStru.getTableName().equals(rightTbName)) {
-                        rightIndex = tableStru.getAttList().indexOf(rightTerm);  // c -> 2 ("rid" is the 3rd attribute of reader table)
-                        break;
-                    }
-                }
-
-                String leftAttName = ((ArrayList<String>) tableMap.get(leftTbName.replaceAll("'", ""))).get(leftIndex);
-                String rightAttName = ((ArrayList<String>) tableMap.get(rightTbName.replaceAll("'", ""))).get(rightIndex);
-
-                String leftTbNickName = "";
-                String rightTbNickName = "";
-
-                for (Object entry : tbRecord.entrySet()) {
-                    if ((((Map.Entry) entry).getValue()).equals(leftTbName)) {
-                        leftTbNickName = (String) ((Map.Entry) entry).getKey();
-                    }
-                    if ((((Map.Entry) entry).getValue()).equals(rightTbName)) {
-                        rightTbNickName = (String) ((Map.Entry) entry).getKey();
-                    }
-                }
-
-                sql += leftTbNickName + "." + leftAttName + " "
-                        + conditionStru.getSymbel() + " " + rightTbNickName + "." + rightAttName;
-                sql += " AND ";
-            }
-            sql = sql.substring(0, sql.length() - 4);
-            sql += ";";
-            String[] depSql = new String[2 + attNameLst.size()];  // [queryTbName, sql , attName]
-            depSql[0] = queryTb;
-            depSql[1] = sql;
-            for(int i = 0 ; i < attNameLst.size() ; i++){
-                depSql[2 + i] =  attNameLst.get(i);
-            }
-            sqlLst.add(depSql);
-
+        String sql = "SELECT DISTINCT * FROM ";
+        String queryTbNickName = "";
+        HashMap tbRecord = new HashMap();
+        int count = 0;
+        for (TableStru tableStru : tableList) {
+            String tbName = tableStru.getTableName();
+            String nickName = "TB" + count;
+            tbRecord.put(nickName, tbName);
+            sql += tbName.replaceAll("'", "") + " AS " + nickName + " ,";
+            count++;
         }
-        return sqlLst;
+
+
+        //sql = sql.replaceAll("\\*",queryTbNickName + ".*");
+        sql = sql.substring(0, sql.length() - 1); //remove the last ","
+        sql += " WHERE ";
+
+        //rewrite the equality by finding the same symbol
+        ArrayList<String> attNameLst = new ArrayList<>(); //record the attributes name which has equal attribute in different table
+
+        for (Map.Entry entry : symbolMap.entrySet()) {
+            // iteratively find regarding tables when a symbol has more than 2 tables using it (c -> reader,reader')
+            if (((ArrayList<String>) entry.getValue()).size() >= 2) {
+
+                ArrayList<String> nickNameLst = new ArrayList<>(); //record the nick name of the name
+                for (String tbName : ((ArrayList<String>) entry.getValue())) {
+                    int index = 0;
+                    for (TableStru tableStru : tableList) {
+                        if (tableStru.getTableName().equals(tbName)) {
+                            index = tableStru.getAttList().indexOf(entry.getKey());  // c -> 2 ("rid" is the 3rd attribute of reader table)
+                            break;
+                        }
+                    }
+
+                    String realTbName = tbName.replaceAll("'", "");
+                    // attName records all the regarding attributes in the
+                    attNameLst.add(((ArrayList<String>) tableMap.get(realTbName)).get(index));
+
+                    //find the attribute name and add (c -> 2 --(reader)-> rid)
+                    for (Object entry2 : tbRecord.entrySet()) {
+                        if ((((Map.Entry) entry2).getValue()).equals(tbName)) {
+                            nickNameLst.add((String) ((Map.Entry) entry2).getKey());
+                        }
+                    }
+                }
+
+                //start rewrite the equal condition
+                for (int i = 0; i < attNameLst.size(); i++) {
+                    if (i == 0) continue;
+                    sql += nickNameLst.get(i - 1) + "." + attNameLst.get(i - 1) + " = "
+                            + nickNameLst.get(i) + "." + attNameLst.get(i) + " AND ";
+                }
+            }
+        }
+
+        // rewrite the condition parts : a=g,...
+
+        for (ConditionStru conditionStru : condintionLst) {
+            String leftTerm = conditionStru.getLeftTerm();
+            String rightTerm = conditionStru.getRightTerm();
+
+            int leftIndex = 0;
+            int rightIndex = 0;
+
+            String leftTbName = (symbolMap.get(leftTerm)).get(0); // only need 1 regarding table
+            String rightTbName = (symbolMap.get(rightTerm)).get(0); // only need 1 regarding table
+
+            for (TableStru tableStru : tableList) {
+                if (tableStru.getTableName().equals(leftTbName)) {
+                    leftIndex = tableStru.getAttList().indexOf(leftTerm);  // c -> 2 ("rid" is the 3rd attribute of reader table)
+                    break;
+                }
+            }
+            for (TableStru tableStru : tableList) {
+                if (tableStru.getTableName().equals(rightTbName)) {
+                    rightIndex = tableStru.getAttList().indexOf(rightTerm);  // c -> 2 ("rid" is the 3rd attribute of reader table)
+                    break;
+                }
+            }
+
+            String leftAttName = ((ArrayList<String>) tableMap.get(leftTbName.replaceAll("'", ""))).get(leftIndex);
+            String rightAttName = ((ArrayList<String>) tableMap.get(rightTbName.replaceAll("'", ""))).get(rightIndex);
+
+            String leftTbNickName = "";
+            String rightTbNickName = "";
+
+            for (Object entry : tbRecord.entrySet()) {
+                if ((((Map.Entry) entry).getValue()).equals(leftTbName)) {
+                    leftTbNickName = (String) ((Map.Entry) entry).getKey();
+                }
+                if ((((Map.Entry) entry).getValue()).equals(rightTbName)) {
+                    rightTbNickName = (String) ((Map.Entry) entry).getKey();
+                }
+            }
+
+            sql += leftTbNickName + "." + leftAttName + " "
+                    + conditionStru.getSymbel() + " " + rightTbNickName + "." + rightAttName;
+            sql += " AND ";
+        }
+        sql = sql.substring(0, sql.length() - 4);
+        sql += ";";
+        String[] depSql = new String[1 + attNameLst.size()];  // [queryTbName, sql , attName]
+
+        depSql[0] = sql;
+        for(int i = 0 ; i < attNameLst.size() ; i++){
+            depSql[1 + i] =  attNameLst.get(i);
+        }
+
+
+        return depSql;
     }
 
     public String createDeletionTableSql(String tableName, Connection c, ArrayList<String> attNameLst, ArrayList<HashMap> vioTuples,int sequence) {
@@ -352,21 +346,33 @@ public class ConstraintRewrite2 {
      * @throws SQLException
      */
     public HashMap<String,ArrayList<HashMap>> getVioTuples(String[] depSqlArray, Connection c,HashMap<String,ArrayList> tableMap) throws SQLException {
-        ArrayList<String> tableSchema = tableMap.get(depSqlArray[0]);
         HashMap<String,ArrayList<HashMap>> vioTuples = new HashMap();
         Statement stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery(depSqlArray[1]);
-        if(depSqlArray.length > 2){
+        ResultSet rs = stmt.executeQuery(depSqlArray[0]);
+
+
+
+
+        if(depSqlArray.length > 1){
             // have equal attributes in different tables
             while (rs.next()){
                 HashMap tuple = new HashMap<>();
-                for(String attName : tableSchema){
-                    String attValue = rs.getString(attName);
-                    tuple.put(attName,attValue);
+
+                int index  = 1 ;
+                for (TableStru tbStru: tableList){
+                    String tbName = tbStru.getTableName();
+
+                    for(Object attName : tableMap.get(tbName.replaceAll("'",""))){
+                        String attValue = rs.getString(index); // we can get all type data by getString?
+                        index ++;
+                        tuple.put(tbName + "_" + attName,attValue);  // reader_rid,reader_firstname ...reader'_rid
+                    }
                 }
+
+
                 String key = "";
-                for(int i = 0 ; i < depSqlArray.length - 2 ; i++){
-                    key += tuple.get(depSqlArray[i + 2]);
+                for(int i = 0 ; i < depSqlArray.length - 1 ; i++){ // the depSqlArray[0] is sql
+                    key += tuple.get(tableList.get(i).getTableName() + "_" + depSqlArray[i + 1]) + ";";
                 }
                 if(vioTuples.containsKey(key)){
                     ArrayList<HashMap> existLst = vioTuples.get(key);
@@ -379,24 +385,45 @@ public class ConstraintRewrite2 {
                 }
             }
         }else{
-            // doesn't have equal attributes in different tables
+            // doesn't have equal attributes in different tables ......
+
+            //.....
             String key = "";
-            ArrayList<HashMap> existLst = vioTuples.get(key);
+            ArrayList<HashMap> newExistLst = new ArrayList<>();
+            vioTuples.put(key,newExistLst);
+
+
             while (rs.next()){
+                ArrayList<HashMap> existLst = vioTuples.get(key);
                 HashMap tuple = new HashMap<>();
-                for(String attName : tableSchema){
-                    String attValue = rs.getString(attName);
-                    tuple.put(attName,attValue);
+
+
+                for (TableStru tbStru: tableList){
+                    String tbName = tbStru.getTableName();
+                    for(Object attName : tableMap.get(tbName)){
+                        String attValue = rs.getString((String)attName);
+                        tuple.put(tbName + "_" + attName,attValue);
+                    }
                 }
+
+
                 existLst.add(tuple);
+                vioTuples.put(key,existLst);
             }
-            vioTuples.put(key,existLst);
+            // 还没想好
+
         }
 
         stmt.close();
         rs.close();
         return vioTuples;
     }
+
+    public ArrayList<TableStru> getTableList() {
+        return tableList;
+    }
+
+
 
 }
 

@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 public class PostgreSQLJDBC6 {
 
-
     public Connection connectDB(String address,String port,String dbName, String usrName, String psw ) {
         Connection c = null;
         try {

@@ -70,8 +70,7 @@ public class Main {
                     if(main.constraintStruLst != null){
                         for(ConstraintStru2 constraintStru: main.constraintStruLst){
                             int sequence = constraintStru.getSequence();
-                            String tableName = constraintStru.getDepSqlLst().get(sequence)[0];
-                            String error_sql = "DROP TABLE del_" + tableName + sequence + ";";
+                            String error_sql = "DROP TABLE delTable"  + sequence + ";";
                             main.postgreSQLJDBC.execute(c, error_sql,false);
                         }
                     }
@@ -131,17 +130,13 @@ public class Main {
 
 
 
-                ArrayList<String> queryTables = new ArrayList<>();
-                queryTables.add("reader"); //change
-                queryTables.add("book");
-
                 epsilon = Float.valueOf(errorText.getText().trim());  // error bound set by user
                 theta = Float.valueOf(confidenceText.getText().trim());  // confidence set by user
 
                 try {
                     int sequence = 0;  // record which constraint
                     for (String constraint : consText.getText().split(";")) {
-                        ConstraintStru2 constraintStru= violationCheck(constraint.trim(),queryTables,sequence);
+                        ConstraintStru2 constraintStru= violationCheck(constraint.trim(),sequence);
                         constraintStru.setSequence(sequence);
                         constraintStruLst.add(constraintStru);  // add violation tuples with regarding sql
                     }
@@ -157,12 +152,12 @@ public class Main {
     /********
      *
      * @param constraint
-     * @param queryTbs
+     * @param
      * @return
      * @throws SQLException
      *  find the violation tuples and regarding table, and save them in the del_ table
      */
-    public ConstraintStru2 violationCheck(String constraint,ArrayList<String> queryTbs, int sequence) throws SQLException {
+    public ConstraintStru2 violationCheck(String constraint, int sequence) throws SQLException {
 
         ConstraintRewrite2 constraintRewrite = new ConstraintRewrite2();
 
@@ -189,27 +184,32 @@ public class Main {
          constraint rewrite and get violation tuples
          *********/
 
-        HashMap<String,HashMap<String,ArrayList<HashMap>>> vioTupleMap = new HashMap<>();
+
+        //{ ........ }
         // <"att1 att2 att3",ArrayList<tuples>>
-        ArrayList<String[]> sqlLst = constraintRewrite.rewrite(tableMap,queryTbs);
-        for(String[] depSqlArray: sqlLst){ // String[queryTbName, sql , attName1,attName2...]
-            HashMap<String,ArrayList<HashMap>> vioTuples = constraintRewrite.getVioTuples(depSqlArray,c, tableMap);
-            vioTupleMap.put(depSqlArray[0],vioTuples);  // get violation tuples for each table
-            // create deletion table with same structure and store them in the deletion table
-            /*
+        ArrayList<String> consTbLst = new ArrayList<>();  // all the regarding table in a constraint
+        for(TableStru tbStru: constraintRewrite.getTableList()){
+            consTbLst.add(tbStru.getTableName());
+        }
+        //{ ........ }
+        String[] depSqlArray = constraintRewrite.rewrite(tableMap);
+         // String[ sql , attName1,attName2...]
+        HashMap<String,ArrayList<HashMap>> vioTupleMap = constraintRewrite.getVioTuples(depSqlArray,c, tableMap);
+        // create deletion table with same structure and store them in the deletion table
+        /*
             String createDelTable = "CREATE TABLE del_" +  depSqlArray[0] + sequence + " AS SELECT * FROM " + depSqlArray[0] + " WHERE 1=2;";
             String createDelSql = constraintRewrite.createDeletionTableSql(depSqlArray[0],c, tableMap.get(depSqlArray[0]),vioTuples, sequence);
             postgreSQLJDBC.execute(c,createDelTable,false);
             postgreSQLJDBC.execute(c,createDelSql,false);
             */
-        }
 
-        ConstraintStru2 constraintStru = new ConstraintStru2(vioTupleMap,sqlLst);
+
+        ConstraintStru2 constraintStru = new ConstraintStru2(vioTupleMap,depSqlArray);
         //System.out.println(sql);
 
-        for(String[] querySql: sqlLst){
-            outputText.append(querySql[1] + "\n");
-        }
+
+        outputText.append(depSqlArray[0] + "\n");
+
 
         outputText.repaint();
         outputText.updateUI();
@@ -227,7 +227,7 @@ public class Main {
         try {
             //Run Row(SQL(theta)) for each constraint
             for(ConstraintStru2 constraintStru: constraintStruLst){
-                if (constraintStru.getDepSqlLst().size() > 2){
+                if (constraintStru.getDepSqlLst().length > 1){
                     // has equal attribute for different table
                     for(int i=0; i <= m; i++){
                         RandomMarkov randomMarkov = new RandomMarkov(constraintStru,random);
