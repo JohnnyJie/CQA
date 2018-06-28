@@ -31,8 +31,7 @@ public class RandomMarkov implements MarkovTree{
         int tupleLstSize = tupleLst.size();
         int pos2 = Math.abs(random.nextInt()) % tupleLstSize;
         HashMap tuple = tupleLst.get(pos2);
-
-
+        
         // be careful it seems transfer reference
         vioTupleMap.remove(keysLst.get(pos)); // remove the group of violation tuples in each violation map
 

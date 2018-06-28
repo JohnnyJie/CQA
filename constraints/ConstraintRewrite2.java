@@ -351,8 +351,6 @@ public class ConstraintRewrite2 {
         ResultSet rs = stmt.executeQuery(depSqlArray[0]);
 
 
-
-
         if(depSqlArray.length > 1){
             // have equal attributes in different tables
             while (rs.next()){

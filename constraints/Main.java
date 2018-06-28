@@ -4,12 +4,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class Main {
@@ -52,7 +49,7 @@ public class Main {
     private static Connection c;
     private PostgreSQLJDBC6 postgreSQLJDBC;
     private HashMap<String,ArrayList> tableMap;
-    private ArrayList<ConstraintStru2> constraintStruLst;
+    private ConstraintRewrite2 constraintRewrite;
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -67,13 +64,13 @@ public class Main {
                 super.windowClosing(e);
                 try {
                     // remove the deletion table
-                    if(main.constraintStruLst != null){
-                        for(ConstraintStru2 constraintStru: main.constraintStruLst){
-                            int sequence = constraintStru.getSequence();
-                            String error_sql = "DROP TABLE delTable"  + sequence + ";";
-                            main.postgreSQLJDBC.execute(c, error_sql,false);
-                        }
-                    }
+//                    if(main.constraintStruLst != null){
+//                        for(ConstraintStru2 constraintStru: main.constraintStruLst){
+//                            int sequence = constraintStru.getSequence();
+//                            String error_sql = "DROP TABLE delTable"  + sequence + ";";
+//                            main.postgreSQLJDBC.execute(c, error_sql,false);
+//                        }
+//                    }
 
                     c.close();
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,11 +121,7 @@ public class Main {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                constraintStruLst = new ArrayList<>();
                 // invoke the query analysis to get the regarding query tables
-
-
-
 
                 epsilon = Float.valueOf(errorText.getText().trim());  // error bound set by user
                 theta = Float.valueOf(confidenceText.getText().trim());  // confidence set by user
@@ -136,11 +129,8 @@ public class Main {
                 try {
                     int sequence = 0;  // record which constraint
                     for (String constraint : consText.getText().split(";")) {
-                        ConstraintStru2 constraintStru= violationCheck(constraint.trim(),sequence);
-                        constraintStru.setSequence(sequence);
-                        constraintStruLst.add(constraintStru);  // add violation tuples with regarding sql
+                        sampleFramework(constraint.trim(),sequence);
                     }
-                    sampleFramework(constraintStruLst);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -159,7 +149,7 @@ public class Main {
      */
     public ConstraintStru2 violationCheck(String constraint, int sequence) throws SQLException {
 
-        ConstraintRewrite2 constraintRewrite = new ConstraintRewrite2();
+        constraintRewrite = new ConstraintRewrite2();
 
         /**********
          if has two "reader" need to write as "reader","reader'"
@@ -168,8 +158,6 @@ public class Main {
          reader(a,b,c,d,e,f),                             reader'(g,h,c,i,j,k),....                         -: [ false |a=g,...]
          *********/
         //"reader(a,b,c,d,e,f),reader'(g,h,c,i,j,k) -: [ false |a=g]"
-        //constraintRewrite.DCsParse(consText.getText().trim());
-        //constraintRewrite.EGDsParse("reader(a,b,c,d,e,f),reader'(g,h,c,i,j,a),... -: a=g, b=h");
         constraintRewrite.parse(constraint);
 
         /*********
@@ -195,7 +183,9 @@ public class Main {
         String[] depSqlArray = constraintRewrite.rewrite(tableMap);
          // String[ sql , attName1,attName2...]
         HashMap<String,ArrayList<HashMap>> vioTupleMap = constraintRewrite.getVioTuples(depSqlArray,c, tableMap);
+
         // create deletion table with same structure and store them in the deletion table
+
         /*
             String createDelTable = "CREATE TABLE del_" +  depSqlArray[0] + sequence + " AS SELECT * FROM " + depSqlArray[0] + " WHERE 1=2;";
             String createDelSql = constraintRewrite.createDeletionTableSql(depSqlArray[0],c, tableMap.get(depSqlArray[0]),vioTuples, sequence);
@@ -210,7 +200,6 @@ public class Main {
 
         outputText.append(depSqlArray[0] + "\n");
 
-
         outputText.repaint();
         outputText.updateUI();
         outputText.validate();
@@ -218,80 +207,46 @@ public class Main {
         return constraintStru;
     }
 
-    public void sampleFramework(ArrayList<ConstraintStru2> constraintStruLst){
+    public void sampleFramework(String constraint, int sequence) throws SQLException {
         int count = 0 ;
         Random random = new Random();
         int m = (int)((1 / (2 * epsilon)) * Math.log(2 / theta));
+
+        ConstraintStru2 constraintStru= violationCheck(constraint, sequence);
+
         System.out.println("m: " + m);
 
         try {
             //Run Row(SQL(theta)) for each constraint
-            for(ConstraintStru2 constraintStru: constraintStruLst){
                 if (constraintStru.getDepSqlLst().length > 1){
                     // has equal attribute for different table
                     for(int i=0; i <= m; i++){
                         RandomMarkov randomMarkov = new RandomMarkov(constraintStru,random);
                         // markov chain provide the tuples which to delete next
+                        ArrayList<TableStru> tableList = constraintRewrite.getTableList();
+
                         while(randomMarkov.hasNext()){
-                            System.out.println(randomMarkov.next());
 
-                        }
-                    }
-                }
-
-
-
-                /******
-
-                String tableName = constraintStru.getpKeyDepStru().getTableName();
-
-                for(int i=0;i<=m;i++){
-                    String createTempSql = "CREATE TABLE tmp_" +  tableName + " as SELECT * FROM old_" + tableName +" ;";
-                    po.execute(c,createTempSql,false);
-                    po.repair(c, random,tableVioMap,(ArrayList)tableMap.get(tableName),constraintStru);  //choose one tuple add to the oldTable
-                    HashMap<String,HashMap<String,ArrayList>> subTableVioMap = po.violationCheck(c,constraintStru,tableMap,"tmp_" + tableName); //check for single theta
-                    while(!subTableVioMap.isEmpty()){
-                        //delete
-                        for (Object entry : subTableVioMap.entrySet()) {
-                            //String pKeyCombination = (String) ((Map.Entry)entry).getKey();
-                            HashMap<String,ArrayList> subVioTupleMapLst = (HashMap) ((Map.Entry)entry).getValue();
-                            for (Object subEntry : subVioTupleMapLst.entrySet()) {
-                                ArrayList<HashMap> subTupleAttMapLst = (ArrayList) (((Map.Entry)subEntry).getValue());
-                                for(HashMap subTupleMap: subTupleAttMapLst) {
-                                    String sql = "DELETE FROM tmp_" + tableName + " WHERE ";
-                                    for (Object tupleEntry : subTupleMap.entrySet()) {
-                                        sql += (((Map.Entry) tupleEntry).getKey()) + " = '" + (((Map.Entry) tupleEntry).getValue()) + "' AND ";
-                                    }
-                                    sql = sql.substring(0, sql.length() - 4); //remove the last "AND"
-                                    sql += ";";
-                                    this.execute(c, sql, false);
-                                }
+                            HashMap vioTuple = randomMarkov.next();
+                            // reader_rid,reader_firstname ...reader'_rid
+                            int pos =  Math.abs(random.nextInt()) % tableList.size();
+                            System.out.println(pos);
+                            TableStru tbStru = tableList.get(pos);
+                            String tbName = tbStru.getTableName();
+                            HashMap tuple = new HashMap();
+                            for(Object attName : tableMap.get(tbName.replaceAll("'",""))){
+                                tuple.put(attName,vioTuple.get(tbName + "_" + attName));
+                                // reader_rid,reader_firstname ...reader_phone
                             }
+
+                            System.out.println(vioTuple);
+                            System.out.println(tuple);
                         }
-                        //repair
-                        po.repair(c, random,subTableVioMap,(ArrayList<String>) tableMap.get(tableName),constraintStru);
-                        subTableVioMap = po.violationCheck(c,constraintStru,tableMap,"tmp_" + tableName);
                     }
-
-                    Boolean bool = po.executeFile(c ,po.originQueryPath,true);
-                    if(bool) {
-                        count++;
-                    }
-                    System.out.println("---------------------------------------------------------------------: " + i);
-                    String sql = "DROP TABLE tmp_" + tableName + ";";
-                    this.execute(c, sql,false);
-
                 }
-                 ***/
-            }
 
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                c.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
         }
         System.out.println(count + "/" + m);
     }
