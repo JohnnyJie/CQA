@@ -182,7 +182,7 @@ public class Main {
         //{ ........ }
         String[] depSqlArray = constraintRewrite.rewrite(tableMap);
          // String[ sql , attName1,attName2...]
-        HashMap<String,ArrayList<HashMap>> vioTupleMap = constraintRewrite.getVioTuples(depSqlArray,c, tableMap);
+        ArrayList<HashMap> vioTupleMap = constraintRewrite.getVioTuples(depSqlArray,c, tableMap);
 
         // create deletion table with same structure and store them in the deletion table
 
@@ -218,32 +218,22 @@ public class Main {
 
         try {
             //Run Row(SQL(theta)) for each constraint
-                if (constraintStru.getDepSqlLst().length > 1){
-                    // has equal attribute for different table
-                    for(int i=0; i <= m; i++){
-                        RandomMarkov randomMarkov = new RandomMarkov(constraintStru,random);
-                        // markov chain provide the tuples which to delete next
-                        ArrayList<TableStru> tableList = constraintRewrite.getTableList();
 
-                        while(randomMarkov.hasNext()){
+            for(int i=0; i <= m; i++){
+                ArrayList<TableStru> tableList = constraintRewrite.getTableList();
+                RandomMarkov randomMarkov = new RandomMarkov(constraintStru,random,tableList,tableMap);
+                // markov chain provide the tuples which to delete next
 
-                            HashMap vioTuple = randomMarkov.next();
-                            // reader_rid,reader_firstname ...reader'_rid
-                            int pos =  Math.abs(random.nextInt()) % tableList.size();
-                            System.out.println(pos);
-                            TableStru tbStru = tableList.get(pos);
-                            String tbName = tbStru.getTableName();
-                            HashMap tuple = new HashMap();
-                            for(Object attName : tableMap.get(tbName.replaceAll("'",""))){
-                                tuple.put(attName,vioTuple.get(tbName + "_" + attName));
-                                // reader_rid,reader_firstname ...reader_phone
-                            }
 
-                            System.out.println(vioTuple);
-                            System.out.println(tuple);
-                        }
-                    }
+                while(randomMarkov.hasNext()){
+
+                    HashMap tuple = randomMarkov.next();
+                    // reader_rid,reader_firstname ...reader'_rid
+
+                    System.out.println(tuple);
                 }
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();

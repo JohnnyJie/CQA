@@ -345,72 +345,32 @@ public class ConstraintRewrite2 {
      * @return
      * @throws SQLException
      */
-    public HashMap<String,ArrayList<HashMap>> getVioTuples(String[] depSqlArray, Connection c,HashMap<String,ArrayList> tableMap) throws SQLException {
-        HashMap<String,ArrayList<HashMap>> vioTuples = new HashMap();
+    public ArrayList<HashMap> getVioTuples(String[] depSqlArray, Connection c,HashMap<String,ArrayList> tableMap) throws SQLException {
+        ArrayList<HashMap> vioTuples = new ArrayList<>();  // <tableName,<attributeName,value>>
         Statement stmt = c.createStatement();
         ResultSet rs = stmt.executeQuery(depSqlArray[0]);
 
 
-        if(depSqlArray.length > 1){
-            // have equal attributes in different tables
-            while (rs.next()){
-                HashMap tuple = new HashMap<>();
+        // have equal attributes in different tables
+        while (rs.next()){
+            HashMap tuple = new HashMap<>();
 
-                int index  = 1 ;
-                for (TableStru tbStru: tableList){
-                    String tbName = tbStru.getTableName();
+            int index  = 1 ;
+            for (TableStru tbStru: tableList){
+                String tbName = tbStru.getTableName();
 
-                    for(Object attName : tableMap.get(tbName.replaceAll("'",""))){
-                        String attValue = rs.getString(index); // we can get all type data by getString?
-                        index ++;
-                        tuple.put(tbName + "_" + attName,attValue);  // reader_rid,reader_firstname ...reader'_rid
-                    }
-                }
-
-
-                String key = "";
-                for(int i = 0 ; i < depSqlArray.length - 1 ; i++){ // the depSqlArray[0] is sql
-                    key += tuple.get(tableList.get(i).getTableName() + "_" + depSqlArray[i + 1]) + ";";
-                }
-                if(vioTuples.containsKey(key)){
-                    ArrayList<HashMap> existLst = vioTuples.get(key);
-                    existLst.add(tuple);
-                    vioTuples.put(key,existLst);
-                }else {
-                    ArrayList<HashMap> newExistLst = new ArrayList<>();
-                    newExistLst.add(tuple);
-                    vioTuples.put(key,newExistLst);
+                for(Object attName : tableMap.get(tbName.replaceAll("'",""))){
+                    String attValue = rs.getString(index); // we can get all type data by getString?
+                    index ++;
+                    tuple.put(tbName + "_" + attName,attValue);  // reader_rid,reader_firstname ...reader'_rid
                 }
             }
-        }else{
-            // doesn't have equal attributes in different tables ......
-
-            //.....
-            String key = "";
-            ArrayList<HashMap> newExistLst = new ArrayList<>();
-            vioTuples.put(key,newExistLst);
 
 
-            while (rs.next()){
-                ArrayList<HashMap> existLst = vioTuples.get(key);
-                HashMap tuple = new HashMap<>();
-
-
-                for (TableStru tbStru: tableList){
-                    String tbName = tbStru.getTableName();
-                    for(Object attName : tableMap.get(tbName)){
-                        String attValue = rs.getString((String)attName);
-                        tuple.put(tbName + "_" + attName,attValue);
-                    }
-                }
-
-
-                existLst.add(tuple);
-                vioTuples.put(key,existLst);
-            }
-            // 还没想好
-
+            vioTuples.add(tuple);
         }
+
+
 
         stmt.close();
         rs.close();
