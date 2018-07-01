@@ -34,6 +34,7 @@ public class RandomMarkov implements MarkovTree{
         for(Object attName : tableMap.get(tbName.replaceAll("'",""))){
             tuple.put(attName,vioTuple.get(tbName + "_" + attName));
         }
+        tuple.put("tbName",tbName);  // store the regarding table name
         // delete all the combined violation tuple contained this tuple
         vioTupleLst.remove(pos);
         Iterator<HashMap> iterator = vioTupleLst.iterator();

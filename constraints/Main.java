@@ -228,7 +228,7 @@ public class Main {
                 while(randomMarkov.hasNext()){
 
                     HashMap tuple = randomMarkov.next();
-                    // reader_rid,reader_firstname ...reader'_rid
+                    // {reader'_rid: xxx,reader'_firstname: xxx ..., tbName:reader'} including table name, need remove "'"
 
                     System.out.println(tuple);
                 }
