@@ -184,18 +184,7 @@ public class Main {
          // String[ sql , attName1,attName2...]
         ArrayList<HashMap> vioTupleMap = constraintRewrite.getVioTuples(depSqlArray,c, tableMap);
 
-        // create deletion table with same structure and store them in the deletion table
-
-        /*
-            String createDelTable = "CREATE TABLE del_" +  depSqlArray[0] + sequence + " AS SELECT * FROM " + depSqlArray[0] + " WHERE 1=2;";
-            String createDelSql = constraintRewrite.createDeletionTableSql(depSqlArray[0],c, tableMap.get(depSqlArray[0]),vioTuples, sequence);
-            postgreSQLJDBC.execute(c,createDelTable,false);
-            postgreSQLJDBC.execute(c,createDelSql,false);
-            */
-
-
         ConstraintStru2 constraintStru = new ConstraintStru2(vioTupleMap,depSqlArray);
-        //System.out.println(sql);
 
 
         outputText.append(depSqlArray[0] + "\n");
