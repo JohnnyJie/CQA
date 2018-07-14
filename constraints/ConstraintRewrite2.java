@@ -161,7 +161,7 @@ public class ConstraintRewrite2 {
                 else
                     throw new Exception("constraint format error");
 
-                condintionLst.add(new ConditionStru(leftTerm,rightTerm,sign,false));
+                condintionLst.add(new ConditionStru(leftTerm,rightTerm,sign,true));
             }
 
             if (condintionLst.size()==0)
