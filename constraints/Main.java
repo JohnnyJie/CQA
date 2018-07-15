@@ -43,7 +43,7 @@ public class Main {
     private String port = "5432";
     private String usrName = "postgres";
     private String psw = "123";
-    private String constraints = "reader(a,b,c,d,e,f),reader'(g,h,c,i,j,k) -: a=g";
+    private String constraints = "reader(a,b,c,d,e,f),reader(g,h,c,i,j,k) -: a=g";
     private float epsilon = 0.1f;
     private float theta = 0.01f;
     private static Connection c;

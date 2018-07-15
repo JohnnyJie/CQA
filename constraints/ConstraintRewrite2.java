@@ -21,12 +21,16 @@ public class ConstraintRewrite2 {
 
 
     public void parse(String singleConstraint){
-        String rightAtoms = singleConstraint.split("-:")[1].trim();
+        // EGD: reader(a,b,c,d,e,f),reader'(g,h,c,i,j,k) -: a=g
+        // DC: reader(a,b,c,d,e,f),reader'(g,h,c,i,j,k),a = g -: false
 
-        String rightAtomsRule = "\\[\\s+false\\s+\\|{1}.*?\\]";
+        String rightAtoms = singleConstraint.split("-:")[1].trim();
+        String rightAtomsRule = ".*?false";
+
         Pattern rightAtomsPattern = Pattern.compile(rightAtomsRule);
         Matcher rightAtomsMatcher = rightAtomsPattern.matcher(rightAtoms);
-        if (rightAtomsMatcher.find()) {
+
+        if (rightAtomsMatcher.matches()) {
             DCsParse(singleConstraint);
         }else {
             EGDsParse(singleConstraint);
@@ -34,80 +38,98 @@ public class ConstraintRewrite2 {
 
     }
 
-    public void DCsParse(String singleConstraint){ //reader(a,b,c,d,e,f),reader'(g,h,c,i,j,k),... -: [ false |a=g,...]
+    public void DCsParse(String singleConstraint){ //reader(a,b,c,d,e,f),reader(g,h,c,i,j,k),a=g,... -:  false
         try {
-            String leftAtoms = singleConstraint.split("-:")[0].trim(); //reader(a,b,c,d,e,f),reader'(g,h,c,i,j,k),...
-            String rightAtoms = singleConstraint.split("-:")[1].trim(); //[false | a=g,...]
-
             /************
-             separately extracting the left part (ex. reader(a,b,c,d,e,f),reader'(g,h,c,i,j,k),...)
+             check the format
              ************/
 
-            String leftAtomsRule = ".+?\\({1}.*?\\){1}";
-            Pattern leftAtomsPattern = Pattern.compile(leftAtomsRule);
-            Matcher leftAtomsMatcher = leftAtomsPattern.matcher(leftAtoms);
+            String dcFormatRule = "(.+?\\(.*?\\))(,|.+?\\(.*?\\))*(,|.+?[<=>]+?.+?)*\\s*-:\\s*false\\s*";
+            Pattern dcFormatPattern = Pattern.compile(dcFormatRule);
+            Matcher dcFormatMatcher = dcFormatPattern.matcher(singleConstraint);
+            if (!dcFormatMatcher.matches()) throw new Exception("constraint format error");
 
-            while (leftAtomsMatcher.find()) {
-                String tableString = leftAtomsMatcher.group(0).replaceAll(",|\\)"," "); //reader(a,b,c,d,e,f)
+            String leftAtoms = singleConstraint.split("-:")[0].trim(); // reader(a,b,c,d,e,f),reader(g,h,c,i,j,k),a=g,...
+            String rightAtoms = singleConstraint.split("-:")[1].trim(); // false
+
+
+            /************
+             separately extracting the table in the left part (ex. reader(a,b,c,d,e,f),reader(g,h,c,i,j,k),...)
+             ************/
+
+            String tableRule = ".+?\\({1}.*?\\){1}";
+            Pattern tablePattern = Pattern.compile(tableRule);
+            Matcher tableMatcher = tablePattern.matcher(leftAtoms);
+
+            int tableCount = 0;
+            while (tableMatcher.find()) {
+                String tableString = tableMatcher.group(0).replaceAll(",|\\)"," "); //reader(a,b,c,d,e,f)
                 String tableName = tableString.split("\\(")[0].trim(); //reader
+                String nickName = "TB" + tableCount; // TB0
                 ArrayList attLst = new ArrayList();
                 for (String s : tableString.split("\\(")[1].trim().split(" ")){ //a
                     attLst.add(s);  // ArrayList[a , b, ...]
-                    if (symbolMap.containsKey(s)){
+                    if (symbolMap.containsKey(s)){ // record the usage of the symbol in the table
                         ArrayList<String> newLst = symbolMap.get(s);
-                        newLst.add(tableName);
+                        newLst.add(nickName);
                         symbolMap.put(s,newLst);
                     }else {
                         ArrayList<String> newLst = new ArrayList<String>();
-                        newLst.add(tableName);
+                        newLst.add(nickName);
                         symbolMap.put(s,newLst);
                     }
                 }
-                TableStru tbStru = new TableStru(tableName,attLst); //TableStru[R1,ArrayList[att1,att2,...]]
+                TableStru tbStru = new TableStru(tableName,nickName,attLst); //TableStru[R1,ArrayList[att1,att2,...]]
                 tableList.add(tbStru);
+                tableCount ++;
             }
             if (tableList.size()==0)
                 throw new Exception("constraint format error");
 
             /************
-             separately extracting the right part (ex. [false | a=g,...])
+             separately extracting the condition in the left part (ex.  a=g,...)
              ************/
+            String conditionRule = "(\\s*[0-9a-zA-Z.?!]+?\\s*[<=>]+?\\s*[0-9a-zA-Z.?!]+?\\s*)";
+            Pattern conditionPattern = Pattern.compile(conditionRule);
+            Matcher conditionMatcher = conditionPattern.matcher(leftAtoms);
 
-            String rightAtomsRule = "\\[\\s+false\\s+\\|{1}.*?\\]";
-            Pattern rightAtomsPattern = Pattern.compile(rightAtomsRule);
-            Matcher rightAtomsMatcher = rightAtomsPattern.matcher(rightAtoms);
+            // R1.att1 = R2.att1,R2.att1 = R3.att1,...
 
-            if (rightAtomsMatcher.find()) {
-                rightAtoms = rightAtomsMatcher.group(0).replaceAll("\\[\\s+false\\s+\\|{1}","");
-                rightAtoms = rightAtoms.replaceAll("\\]","").trim();
-                // R1.att1 = R2.att1,R2.att1 = R3.att1,...
-                for(String s : rightAtoms.split(",")){ // a=g
-                    String signRule = "[=|<|<=|>|>=]{1}";
-                    String leftTerm = s.split(signRule)[0].trim(); // a
-                    String rightTerm = s.split(signRule)[1].trim(); // g
-                    String sign = "";
-                    Pattern signPattern = Pattern.compile(signRule);
-                    Matcher signMatcher = signPattern.matcher(s);
-                    if(signMatcher.find()) {
-                        sign = signMatcher.group(0); // =
-                    }
-                    else
-                        throw new Exception("constraint format error");
+            while (conditionMatcher.find()) {
+                // a=g
+                String s = conditionMatcher.group(0).replaceAll(",|\\)", " ");
+                String signRule = "(=|<>|>=|<=|<|>){1}";
+                String leftTerm = s.split(signRule)[0].trim(); // a
+                String rightTerm = s.split(signRule)[1].trim(); // g
+                String sign = "";
+                Pattern signPattern = Pattern.compile(signRule);
+                Matcher signMatcher = signPattern.matcher(s);
+                if (signMatcher.find() && rightTerm != null && leftTerm != null) {
+                    sign = signMatcher.group(0); // =
+                } else
+                    throw new Exception("constraint format error");
 
-                    condintionLst.add(new ConditionStru(leftTerm,rightTerm,sign,true));
-                }
-            } else
-                throw new Exception("constraint format error");
-            if (condintionLst.size()==0)
-                throw new Exception("constraint format error");
+                condintionLst.add(new ConditionStru(leftTerm, rightTerm, sign, false));
+            }
+
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void EGDsParse(String singleConstraint){ //reader(a,b,c,d,e,f),reader'(g,h,c,i,j,k),... -: a=g,...
+    public void EGDsParse(String singleConstraint){ //reader(a,b,c,d,e,f),reader(g,h,c,i,j,k),... -: a=g,...
         try {
+
+            /************
+             check the format
+             ************/
+
+            String egdFormatRule = "(.+?\\(.*?\\))(,|.+?\\(.*?\\))*\\s*-:\\s*(,|.+?[<=>]+?.+?)*\\s*";
+            Pattern egdFormatPattern = Pattern.compile(egdFormatRule);
+            Matcher egdFormatMatcher = egdFormatPattern.matcher(singleConstraint);
+            if (!egdFormatMatcher.matches()) throw new Exception("constraint format error");
+
             String leftAtoms = singleConstraint.split("-:")[0].trim(); //R1(att1,att2,...),R2(att1,att2,...),...
             String rightAtoms = singleConstraint.split("-:")[1].trim(); //R1.att1 = R2.att1,R2.att1 = R3.att1,...
 
@@ -120,24 +142,28 @@ public class ConstraintRewrite2 {
             Pattern leftAtomsPattern = Pattern.compile(leftAtomsRule);
             Matcher leftAtomsMatcher = leftAtomsPattern.matcher(leftAtoms);
 
+            int tableCount = 0;
             while (leftAtomsMatcher.find()) {
                 String tableString = leftAtomsMatcher.group(0).replaceAll(",|\\)"," "); //reader(a,b,...)
                 String tableName = tableString.split("\\(")[0].trim(); //reader
+                String nickName = "TB" + tableCount; // TB0
                 ArrayList attLst = new ArrayList();
                 for (String s : tableString.split("\\(")[1].trim().split(" ")){ //att1
                     attLst.add(s);  // ArrayList[a , b, ...]
-                    if (symbolMap.containsKey(s)){
+                    if (symbolMap.containsKey(s)){  // record the usage of the symbol in the table
                         ArrayList<String> newLst = symbolMap.get(s);
-                        newLst.add(tableName);
+                        newLst.add(nickName);
                         symbolMap.put(s,newLst);
                     }else {
                         ArrayList<String> newLst = new ArrayList<String>();
-                        newLst.add(tableName);
+                        newLst.add(nickName);
                         symbolMap.put(s,newLst);
                     }
                 }
-                TableStru tbStru = new TableStru(tableName,attLst); //TableStru[R1,ArrayList[att1,att2,...]]
+
+                TableStru tbStru = new TableStru(tableName,nickName,attLst); //TableStru[reader,TB0,ArrayList[att1,att2,...]]
                 tableList.add(tbStru);
+                tableCount ++;
             }
             if (tableList.size()==0)
                 throw new Exception("constraint format error");
@@ -202,51 +228,46 @@ public class ConstraintRewrite2 {
      */
     public String[] rewrite( HashMap<String,ArrayList> tableMap) throws SQLException {
 
-
+        /**********
+         rewrite the first part of SQL, ex("SELECT DISTINCT * FROM reader as TB0, reader as TB1 WHERE)
+         ***********/
         String sql = "SELECT DISTINCT * FROM ";
-        String queryTbNickName = "";
         HashMap tbRecord = new HashMap();
-        int count = 0;
         for (TableStru tableStru : tableList) {
-            String tbName = tableStru.getTableName();
-            String nickName = "TB" + count;
+            String tbName = tableStru.getTableName(); // reader
+            String nickName = tableStru.getNickName(); // TB0
             tbRecord.put(nickName, tbName);
             sql += tbName.replaceAll("'", "") + " AS " + nickName + " ,";
-            count++;
         }
 
 
-        //sql = sql.replaceAll("\\*",queryTbNickName + ".*");
         sql = sql.substring(0, sql.length() - 1); //remove the last ","
         sql += " WHERE ";
 
-        //rewrite the equality by finding the same symbol
+        /**********
+         rewrite the equality by finding the same symbol in different table
+         find the attribute name by the regarding symbol
+         ***********/
         ArrayList<String> attNameLst = new ArrayList<>(); //record the attributes name which has equal attribute in different table
-
         for (Map.Entry entry : symbolMap.entrySet()) {
-            // iteratively find regarding tables when a symbol has more than 2 tables using it (c -> reader,reader')
+            // iteratively find regarding tables when a symbol has more than 2 tables using it (c -> TB0,TB1)
             if (((ArrayList<String>) entry.getValue()).size() >= 2) {
 
-                ArrayList<String> nickNameLst = new ArrayList<>(); //record the nick name of the name
-                for (String tbName : ((ArrayList<String>) entry.getValue())) {
+                ArrayList<String> nickNameLst = new ArrayList<>(); //record the nickname of the name
+                for (String nickName : ((ArrayList<String>) entry.getValue())) {
+                    String realTbName = "";
                     int index = 0;
                     for (TableStru tableStru : tableList) {
-                        if (tableStru.getTableName().equals(tbName)) {
+                        if (tableStru.getNickName().equals(nickName)) {  // find real table name by nickname
                             index = tableStru.getAttList().indexOf(entry.getKey());  // c -> 2 ("rid" is the 3rd attribute of reader table)
+                            realTbName = tableStru.getTableName();
                             break;
                         }
                     }
 
-                    String realTbName = tbName.replaceAll("'", "");
-                    // attName records all the regarding attributes in the
+                    // find the attribute name by symbel attName records all the regarding attributes in the
                     attNameLst.add(((ArrayList<String>) tableMap.get(realTbName)).get(index));
-
-                    //find the attribute name and add (c -> 2 --(reader)-> rid)
-                    for (Object entry2 : tbRecord.entrySet()) {
-                        if ((((Map.Entry) entry2).getValue()).equals(tbName)) {
-                            nickNameLst.add((String) ((Map.Entry) entry2).getKey());
-                        }
-                    }
+                    nickNameLst.add(nickName);
                 }
 
                 //start rewrite the equal condition
@@ -257,46 +278,39 @@ public class ConstraintRewrite2 {
                 }
             }
         }
-
-        // rewrite the condition parts : a=g,...
+        /**********
+         rewrite the condition parts : a=g,...
+         ***********/
 
         for (ConditionStru conditionStru : condintionLst) {
-            String leftTerm = conditionStru.getLeftTerm();
-            String rightTerm = conditionStru.getRightTerm();
+            String leftTerm = conditionStru.getLeftTerm();  //a
+            String rightTerm = conditionStru.getRightTerm();  //g
 
             int leftIndex = 0;
             int rightIndex = 0;
 
-            String leftTbName = (symbolMap.get(leftTerm)).get(0); // only need 1 regarding table
-            String rightTbName = (symbolMap.get(rightTerm)).get(0); // only need 1 regarding table
+            String leftTbNickName = (symbolMap.get(leftTerm)).get(0); // only need 1 regarding table, ex. TB0
+            String rightTbNickName = (symbolMap.get(rightTerm)).get(0); // only need 1 regarding table
+            String leftTbName = "";
+            String rightTbName = "";
 
             for (TableStru tableStru : tableList) {
-                if (tableStru.getTableName().equals(leftTbName)) {
+                if (tableStru.getNickName().equals(leftTbNickName)) {
                     leftIndex = tableStru.getAttList().indexOf(leftTerm);  // c -> 2 ("rid" is the 3rd attribute of reader table)
+                    leftTbName = tableStru.getTableName();
                     break;
                 }
             }
             for (TableStru tableStru : tableList) {
-                if (tableStru.getTableName().equals(rightTbName)) {
+                if (tableStru.getNickName().equals(rightTbNickName)) {
                     rightIndex = tableStru.getAttList().indexOf(rightTerm);  // c -> 2 ("rid" is the 3rd attribute of reader table)
+                    rightTbName = tableStru.getTableName();
                     break;
                 }
             }
 
             String leftAttName = ((ArrayList<String>) tableMap.get(leftTbName.replaceAll("'", ""))).get(leftIndex);
             String rightAttName = ((ArrayList<String>) tableMap.get(rightTbName.replaceAll("'", ""))).get(rightIndex);
-
-            String leftTbNickName = "";
-            String rightTbNickName = "";
-
-            for (Object entry : tbRecord.entrySet()) {
-                if ((((Map.Entry) entry).getValue()).equals(leftTbName)) {
-                    leftTbNickName = (String) ((Map.Entry) entry).getKey();
-                }
-                if ((((Map.Entry) entry).getValue()).equals(rightTbName)) {
-                    rightTbNickName = (String) ((Map.Entry) entry).getKey();
-                }
-            }
 
             sql += leftTbNickName + "." + leftAttName + " "
                     + conditionStru.getSymbel() + " " + rightTbNickName + "." + rightAttName;
@@ -353,21 +367,23 @@ public class ConstraintRewrite2 {
 
         // have equal attributes in different tables
         while (rs.next()){
-            HashMap tuple = new HashMap<>();
 
+            HashMap completeTuple = new HashMap<>();
+            // record the complete query answer and separate by nickname [TB0(x,y,z...),TB1(x1,y1,z1,),...]
             int index  = 1 ;
             for (TableStru tbStru: tableList){
                 String tbName = tbStru.getTableName();
-
-                for(Object attName : tableMap.get(tbName.replaceAll("'",""))){
+                String nickName = tbStru.getNickName();
+                HashMap partTuple = new HashMap<>();
+                // TB0(x,y,z...)
+                for(Object attName : tableMap.get(tbName)){
                     String attValue = rs.getString(index); // we can get all type data by getString?
                     index ++;
-                    tuple.put(tbName + "_" + attName,attValue);  // reader_rid,reader_firstname ...reader'_rid
+                    partTuple.put(attName,attValue);  // reader_rid,reader_firstname ...reader'_rid
                 }
+                completeTuple.put(nickName,partTuple);
             }
-
-
-            vioTuples.add(tuple);
+            vioTuples.add(completeTuple);
         }
 
 
@@ -384,4 +400,5 @@ public class ConstraintRewrite2 {
 
 
 }
+
 
