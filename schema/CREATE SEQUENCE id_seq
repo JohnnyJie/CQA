@@ -1,0 +1,27 @@
+CREATE SEQUENCE id_seq
+    START WITH 10000
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+****   1 table : users
+
+    alter table users alter column rid set default nextval('id_seq');
+
+    Insert into users(firstname,lastname,born,gender,email) Select firstname,lastname,born,gender,email  From users Order By RANDOM() LIMIT 100;
+
+****   2 table
+
+    Update users alias
+SET age = 17
+where uid in  ( select t1.uid From users as t1,orders as t2 where t2.uid = t1.uid Order By RANDOM() LIMIT 100);
+
+****   3 table
+
+Update users alias
+SET age = 17
+where uid in  ( select t1.uid From users as t1,orders as t2,products as t3 where t2.uid = t1.uid and t2.pid = t3.pid Order By RANDOM() LIMIT 100);
+
+
+select * from users as u, orders as o, products as pr where u.uid = o.uid and pr.pid = o.pid and u.age < pr.limitage;

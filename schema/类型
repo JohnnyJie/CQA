@@ -1,0 +1,7 @@
+1. data size in each table
+2. attribute number for each table
+3. percentage of inconsistent
+4. number of tuples satisfy the query
+5. type of constraints
+6. number of table involved in the constraints
+7. key constraints : number of violation for each key value

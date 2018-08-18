@@ -1,0 +1,766 @@
+Dynamics 2
+Mechanical Engineering 1
+Mechanical Engineering Design 2A
+Mechanical Engineering Design 2B
+Computational Methods and Modelling 3
+Computer Aided Engineering 3
+Conceptual Design for Mechanical Engineers 3
+Dynamics 3
+Fluid Mechanics (Mechanical) 3
+Heat Transfer 3
+Manufacture 3
+Manufacturing Technology 3
+Mechanical Design Principles 3
+Mechanical Design Project 3
+Mechanical Engineering Design 3
+Mechanical Engineering Design 3
+Professional Issues for Mechanical Engineers 3
+Solid Mechanics 3
+Structural Mechanics and Dynamics 3
+Sustainable Energy Group Design Project 3
+Sustainable Energy: Principles and Processes 3
+Thermodynamics 3
+Thermofluids 3
+Computer Methods in Structural Engineering 3
+BEng Electrical and Mechanical Engineering Project 4
+BEng Mechanical Engineering Project 4
+Dynamics 4
+Energy Systems 4
+Fluid Mechanics (Mechanical) 4
+Mechanical Engineering Group Project 4
+Polymers and Composite Materials 4
+Polymers and Composite Materials 4A
+Polymers and Composite Materials 4B
+Solid Mechanics 4
+Sustainable Energy Technologies 4
+Thermodynamics (Mechanical) 4
+Advanced Composite Materials 5
+Advanced Dynamics and Applications 5
+Computational Fluid Dynamics 5
+Dynamics 5
+Engineering in Medicine 5
+Industrial/European Placement 4
+Marine Energy (MSc)
+Marine Energy 5
+Materials and Failure Analysis 5
+Mechanical Engineering MEng Individual Project 5
+Wind Energy 5
+The Finite Element Method 5
+Analytical Chemistry Level 11
+Biomacromolecules Level 11
+Biophysical Chemistry Level 11
+CDT 3-month placement
+CDT-OPTIMA credits awarded at Strathclyde - Build Your Own Microscope Course
+CDT-OPTIMA credits awarded at Strathclyde - Entrepreneurship, Innovation and Commercialisation
+Chemical Medicine Level 11
+Chemistry of Functional Materials Level 11
+Chemistry/Chemical Physics Industrial Research Project
+Chemistry/Chemical Physics International Research Project
+Chemistry/Chemical Physics Research Project
+Chemistry/Chemical Physics Year Abroad Level 11
+Chemistry/Chemical Physics Year Abroad with Industrial Experience Level 11
+Chemistry/Chemical Physics Year in Industry Level 11
+Concepts and Techniques in Bioanalytical Chemistry Level 11
+Environmental Chemistry Level 11
+Grand Challenge in Optical Medical Imaging
+MChem Research Project
+MChemX Research Project
+MSc Dissertation in Chemistry (180 credits)
+MSc Dissertation in Chemistry (60 credits)
+MSc Research Methods
+Physical Techniques in Action Level 11
+Properties and Reactions of Matter Level 11
+Research Methods in Integrated Sensing and Measurement
+Sustainable Chemistry Level 11
+Synthetic Organic Chemistry Level 11
+Techniques and Concepts in Inorganic Chemistry Level 11
+Credits Awarded for Taught Courses [Heriot Watt University] 2
+Data Mining and Exploration
+Decision Making in Robots and Autonomous Agents
+Distributed Systems (Level 11)
+Extreme Computing
+Extreme Computing
+Formal Verification
+Human-Computer Interaction (Level 11)
+Image and Vision Computing
+Informatics Project Proposal
+Informatics Research Proposal
+Informatics Research Review
+Information Theory
+Internet of Things Systems, Security, and the Cloud (IoTSSC)
+Introduction to Modern Cryptography
+Introduction to Modern Cryptography
+Introduction to Quantum Computing
+Introduction to Quantum Computing
+Introduction to Research in Data Science
+Introduction to Research in Data Science
+Introduction to Vision and Robotics
+Introductory Applied Machine Learning
+MInf Project (Part 2)
+MSc Dissertation (Informatics)
+MSc Research Thesis (Neuroinformatics)
+MSc by Research Thesis (Data Science)
+MSc by Research Thesis (Data Science; 120pt)
+MSc by Research Thesis (Pervasive Parallelism)
+Machine Learning Methods for Data Science
+Machine Learning Practical
+Machine Learning and Pattern Recognition
+Machine Translation (Level 11)
+Masters Dissertation (Design Informatics)
+Music Informatics
+Natural Language Generation (Level 11)
+Natural Language Understanding (Level 11)
+Neural Computation
+Neural Computation
+Neural Information Processing
+Neuroinformatics Research
+Parallel Architectures (Level 11)
+Parallel Programming Languages and Systems (Level 11)
+Performance Modelling (Level 11)
+Performance Modelling (Level 11)
+Pervasive Parallelism
+Principles and Design of IoT Systems
+Principles of Neuroscience
+Probabilistic Modelling and Reasoning
+Randomness and Computation
+Reinforcement Learning
+Robot Learning and Sensorimotor Control
+Robotics and Autonomous Systems Research Thesis
+Robotics: Science and Systems
+Scalable Data Management Systems
+Secure Programming
+Semantic Web Systems
+Social and Technological Networks
+Social and Technological Networks
+Software Architecture, Process, and Management (Level 11)
+Text Technologies for Data Science
+Text Technologies for Data Science
+The Human Factor: Working with Users
+Topics in Cognitive Modelling (Level 11)
+Topics in Natural Language Processing
+Types and Semantics for Programming Languages
+Types and Semantics for Programming Languages
+Data Science for Design
+Design For Informatics
+Design Informatics Project
+Design with Data
+Dissertation (Design, Context & Communication)
+Dissertation (Design, Context & Communication)
+Histories and Futures of Technology
+Chemistry 1A
+Chemistry 1B
+Chemistry 2
+Chemistry 2A
+Chemistry 2B
+Chemistry 2X
+Chemistry for Chemical Engineers 1A
+Chemistry for Chemical Engineers 1B
+Chemistry for Life Sciences (PGT)
+Environmental Chemistry 2
+Materials Chemistry (PGT)
+Materials Chemistry 2
+Mathematics for the Natural Sciences 1a
+Mathematics for the Natural Sciences 1b
+Chemistry 3 Semester 2 Project (VS2)
+Chemistry 3 Summer/Semester 1 Project (VS1)
+Chemistry 3A
+Chemistry 3A (VS1)
+Chemistry 3A (VS2)
+Chemistry 3B
+Chemistry 3B (VS1)
+Chemistry 3B (VS2)
+Chemistry 3P Practical and Transferable Skills
+Analytical Chemistry Level 10
+Analytical Chemistry Level 10
+BSc Chemistry Research Project/Transferable Skills Course
+Biomacromolecules Level 10
+Biomacromolecules Level 10
+Biophysical Chemistry Level 10
+Chemical Medicine Level 10
+Chemistry 4 Summer/Semester 1 Project (VS1)
+Chemistry 4P (Semester 1)
+Chemistry 4P (Semester 2)
+Chemistry of Functional Materials Level 10
+Chemistry of Functional Materials Level 10
+Chemistry of Functional Materials Level 10 (VS1)
+Chemistry/Chemical Physics Year Abroad Level 10
+Chemistry/Chemical Physics Year Abroad with Industrial Experience Level 10
+Chemistry/Chemical Physics Year in Industry Level 10
+Environmental Chemistry Level 10
+Environmental Chemistry Level 10
+MChem Introduction to Research Methods
+Physical Techniques in Action Level 10
+Properties and Reactions of Matter Level 10
+Properties and Reactions of Matter Level 10
+Science Education Placement: Chemistry (40 credits)
+Sustainable Chemistry Level 10
+Synthetic Organic Chemistry Level 10
+Synthetic Organic Chemistry Level 10
+Techniques and Concepts in Inorganic Chemistry Level 10
+Visiting Student Year 4 Semester 2 Project
+Analytical Chemistry Level 11
+Biomacromolecules Level 11
+Biophysical Chemistry Level 11
+CDT 3-month placement
+CDT-OPTIMA credits awarded at Strathclyde - Build Your Own Microscope Course
+CDT-OPTIMA credits awarded at Strathclyde - Entrepreneurship, Innovation and Commercialisation
+Chemical Medicine Level 11
+Chemistry of Functional Materials Level 11
+Chemistry/Chemical Physics Industrial Research Project
+Chemistry/Chemical Physics International Research Project
+Chemistry/Chemical Physics Research Project
+Chemistry/Chemical Physics Year Abroad Level 11
+Chemistry/Chemical Physics Year Abroad with Industrial Experience Level 11
+Chemistry/Chemical Physics Year in Industry Level 11
+Concepts and Techniques in Bioanalytical Chemistry Level 11
+Environmental Chemistry Level 11
+Grand Challenge in Optical Medical Imaging
+MChem Research Project
+MChemX Research Project
+MSc Dissertation in Chemistry (180 credits)
+MSc Dissertation in Chemistry (60 credits)
+MSc Research Methods
+Physical Techniques in Action Level 11
+Properties and Reactions of Matter Level 11
+Research Methods in Integrated Sensing and Measurement
+Sustainable Chemistry Level 11
+Synthetic Organic Chemistry Level 11
+Techniques and Concepts in Inorganic Chemistry Level 11
+Chemical Engineering 1
+Chemical Engineering Thermodynamics 2
+Chemistry and Processes 2
+Computational Methods for Chemical Engineers 2
+Introduction to Biochemical Engineering 2
+Plant Engineering 2
+Process Calculations 2
+Separation Processes 2
+Separation Processes 2
+Thermodynamics (Chemical) 2
+Chemical Engineering Design 3
+Chemical Engineering Kinetics and Catalysis 3
+Chemical Engineering Laboratory 3
+Chemical Engineering Laboratory 3
+Chemical Engineering Laboratory 3
+Chemical Engineering Thermodynamics 3
+Chemical Engineering Unit Operations 3
+Environmental Issues in Chemical Engineering 3
+Heat, Mass and Momentum Transfer 3
+Process Dynamics and Control 3
+Process Safety and Environmental Issues in Chemical Engineering 3
+Safety and Environmental Issues in Chemical Engineering 3
+Solids Processing 3
+Thermodynamics and Unit Operations 3
+Chemical Engineering Design 4
+Chemical Engineering Design: Projects 4
+Chemical Engineering Design: Synthesis and Economics 4
+Chemical Engineering Design: Synthesis and Economics 4
+Chemical Engineering Study Project 4
+Chemical Reaction Engineering 4
+Fluid Mechanics (Chemical) 4
+Fluid Mechanics (Chemical) 4
+Process Safety 4
+Process Safety 4
+Adsorption 5
+Batchwise and Semibatch Processing 5
+Chemical Engineering Industrial Project 5
+Chemical Engineering Research Project (VS)
+Chemical Engineering Research Project (VS)
+Chemical Engineering Research Project (VS)
+Chemical Engineering Research Project 5
+Chemical Engineering Research Project 5
+Gas Separations Using Membranes 5
+Molecular Thermodynamics 5
+Nanomaterials in Chemical and Biomedical Engineering 5
+Numerical Methods for Chemical Engineers 5
+Polymer Science and Engineering 5
+Separation Processes 5
+Separation Processes for Carbon Capture 5
+Analytical Chemistry Level 11
+Biomacromolecules Level 11
+Biophysical Chemistry Level 11
+CDT 3-month placement
+CDT-OPTIMA credits awarded at Strathclyde - Build Your Own Microscope Course
+CDT-OPTIMA credits awarded at Strathclyde - Entrepreneurship, Innovation and Commercialisation
+Chemical Medicine Level 11
+Chemistry of Functional Materials Level 11
+Chemistry/Chemical Physics Industrial Research Project
+Chemistry/Chemical Physics International Research Project
+Chemistry/Chemical Physics Research Project
+Chemistry/Chemical Physics Year Abroad Level 11
+Chemistry/Chemical Physics Year Abroad with Industrial Experience Level 11
+Chemistry/Chemical Physics Year in Industry Level 11
+Concepts and Techniques in Bioanalytical Chemistry Level 11
+Environmental Chemistry Level 11
+Grand Challenge in Optical Medical Imaging
+MChem Research Project
+MChemX Research Project
+MSc Dissertation in Chemistry (180 credits)
+MSc Dissertation in Chemistry (60 credits)
+MSc Research Methods
+Physical Techniques in Action Level 11
+Properties and Reactions of Matter Level 11
+Research Methods in Integrated Sensing and Measurement
+Sustainable Chemistry Level 11
+Synthetic Organic Chemistry Level 11
+Techniques and Concepts in Inorganic Chemistry Level 11
+Computer Programming Skills and Concepts
+Data, Design and Society
+Discrete Mathematics and Mathematical Reasoning
+Informatics 1 - Cognitive Science
+Informatics 1 - Computation and Logic
+Informatics 1 - Data and Analysis
+Informatics 1 - Functional Programming
+Informatics 1 - Object-Oriented Programming
+Informatics 2A - Processing Formal and Natural Languages
+Informatics 2B - Algorithms, Data Structures, Learning
+Informatics 2C - Introduction to Computer Systems
+Informatics 2C - Introduction to Software Engineering
+Informatics 2D - Reasoning and Agents
+AI Large Practical
+Automated Reasoning
+Automated Reasoning
+Computer Architecture
+Computer Design
+Computer Science Large Practical
+Foundations of Natural Language Processing
+Introduction to Computational Neuroscience
+Introduction to Java Programming
+Introduction to Java Programming
+Introduction to Vision and Robotics
+Introduction to Vision and Robotics
+Logic Programming
+Operating Systems
+Software Engineering Large Practical
+System Design Project
+Undergraduate Research Practical
+Agent Based Systems
+Agent Based Systems (Level 10)
+Algorithms and Data Structures
+Compiling Techniques
+Computational Cognitive Science
+Computational Cognitive Science
+Computer Communications and Networks
+Computer Security
+Computer Security
+Database Systems
+Database Systems
+Elements of Programming Languages
+Elements of Programming Languages
+Honours Project (Informatics)
+Intelligent Autonomous Robotics (Level 10)
+Intelligent Autonomous Robotics (Level 10)
+Introduction to Theoretical Computer Science
+Introductory Applied Machine Learning
+MInf Project (Part 1)
+Professional Issues (Level 10)
+Software Design and Modelling
+Software Testing
+Digital Systems Laboratory
+Accelerated Natural Language Processing
+Adaptive Learning Environments 1 (Level 11)
+Advanced Databases (Level 11)
+Advanced Topics in Foundations of Databases
+Advanced Vision
+Advanced Vision (Level 11)
+Advances in Programming Languages
+Algorithmic Game Theory and its Applications
+Applied Databases
+Automatic Speech Recognition
+Bioinformatics 1
+Bioinformatics 2
+Blockchains and Distributed Ledgers
+Blockchains and Distributed Ledgers
+Case Studies in Design Informatics 1
+Case Studies in Design Informatics 2
+Categories and Quantum Informatics
+Compiler Optimisation (Level 11)
+Computational Cognitive Neuroscience
+Computational Complexity
+Computational Neuroscience of Vision
+Computer Algebra
+Computer Animation & Visualisation (Level 11)
+Computer Graphics (Level 11)
+Computer Graphics (Level 11)
+Computer Networking (Level 11)
+Credits Awarded for Autonomous Systems Research [Heriot Watt University]
+Credits Awarded for Taught Courses [Heriot Watt University] 1
+Credits Awarded for Taught Courses [Heriot Watt University] 2
+Data Mining and Exploration
+Decision Making in Robots and Autonomous Agents
+Distributed Systems (Level 11)
+Extreme Computing
+Extreme Computing
+Formal Verification
+Human-Computer Interaction (Level 11)
+Image and Vision Computing
+Informatics Project Proposal
+Informatics Research Proposal
+Informatics Research Review
+Information Theory
+Internet of Things Systems, Security, and the Cloud (IoTSSC)
+Introduction to Modern Cryptography
+Introduction to Modern Cryptography
+Introduction to Quantum Computing
+Introduction to Quantum Computing
+Introduction to Research in Data Science
+Introduction to Research in Data Science
+Introduction to Vision and Robotics
+Introductory Applied Machine Learning
+MInf Project (Part 2)
+MSc Dissertation (Informatics)
+MSc Research Thesis (Neuroinformatics)
+MSc by Research Thesis (Data Science)
+MSc by Research Thesis (Data Science; 120pt)
+MSc by Research Thesis (Pervasive Parallelism)
+Machine Learning Methods for Data Science
+Machine Learning Practical
+Machine Learning and Pattern Recognition
+Machine Translation (Level 11)
+Masters Dissertation (Design Informatics)
+Music Informatics
+Natural Language Generation (Level 11)
+Natural Language Understanding (Level 11)
+Neural Computation
+Neural Computation
+Neural Information Processing
+Neuroinformatics Research
+Parallel Architectures (Level 11)
+Parallel Programming Languages and Systems (Level 11)
+Performance Modelling (Level 11)
+Performance Modelling (Level 11)
+Pervasive Parallelism
+Principles and Design of IoT Systems
+Principles of Neuroscience
+Probabilistic Modelling and Reasoning
+Randomness and Computation
+Reinforcement Learning
+Robot Learning and Sensorimotor Control
+Robotics and Autonomous Systems Research Thesis
+Robotics: Science and Systems
+Scalable Data Management Systems
+Secure Programming
+Semantic Web Systems
+Social and Technological Networks
+Social and Technological Networks
+Software Architecture, Process, and Management (Level 11)
+Text Technologies for Data Science
+Text Technologies for Data Science
+The Human Factor: Working with Users
+Topics in Cognitive Modelling (Level 11)
+Topics in Natural Language Processing
+Types and Semantics for Programming Languages
+Types and Semantics for Programming Languages
+Data Science for Design
+Design For Informatics
+Design Informatics Project
+Design with Data
+Dissertation (Design, Context & Communication)
+Dissertation (Design, Context & Communication)
+Histories and Futures of Technology
+Applications of Finance
+Business Analytics and Information Systems
+Business Economics
+Business Research Methods I: Introduction to Data Analysis
+Business Research Methods I: Quantitative Techniques
+Business Simulation
+Business Student-Led, Individually-Created Course (SLICC; summer)
+Business in the Arts I
+Business in the Arts II
+Business in the Arts Internship Project
+Career Development Planning
+Computing for Business
+Foundations of Business
+Fundamentals of Innovation-Driven Entrepreneurship
+Global Challenges for Business
+Human Resource Management 2
+Industrial Management 1
+Innovation and Entrepreneurship
+International Business and the Multinational Enterprise 2B
+International Business: Globalisation and Trade 2A
+Introduction to Business
+Introduction to Corporate Finance
+Introduction to Entrepreneurship
+Introduction to Financial Markets
+Management Science and Information Systems
+Marketing
+Organisational Behaviour 2
+Organising for Social Change: Creating Value and Impact
+PALs Leadership Development
+Principles of Finance
+Study Skills for Business
+The Business of Edinburgh
+Advertising: Theories and Practice
+Analytical Decision Making with Games
+Applications of Human Resource Management
+Behavioural Finance and Market Efficiency
+Brand Culture
+Business Ethics
+Business Research Methods II: Applications and Analysis
+Business Strategies for International Growth
+Business Studies Long Essay
+Business and Society: The Impact of Globalisation
+Consumer Behaviour
+Corporate Finance
+Creativity in Theory and Practice
+Critical Thinking in Marketing
+Decision Analytics
+Decision-Making under Uncertainty
+Digital Business
+Digital Marketing
+Economic Aspects of Competition Policy
+Enterprise Consultancy Project
+Entrepreneurship and New Venture Creation
+Financial Modelling with Excel
+Financial Services Marketing
+Futures and Options
+Global Creative Industries: The art of business and the business of art
+Green and Sustainable Entrepreneurship
+Human Resource Management: Current Issues and Controversies
+International Business in Emerging Markets
+International HRM and Comparative Employment Relations
+International Marketing
+International Strategic Management in Practice
+Investment and Securities
+Investment and Securities Markets
+Management Consulting
+Management Honours Dissertation
+Management Science and Operations Analytics
+Management Science and Operations Planning
+Managing Across Borders and Cultures
+Managing Change
+Managing Employment Law
+Market Structure, Conduct and Performance
+Marketing Strategy
+Marketing and Society
+Mathematical Programming
+Mathematical Programming in Advanced Analytics
+Negotiation
+New Product Development
+Operations Strategy
+Psychology of Finance
+Quality Management
+Research Methods in Finance
+Risk Management
+Service Management in an International Context
+Services Marketing
+Social and Sustainable Entrepreneurship
+Strategic Leadership Development
+Strategic Management
+The Business Response to Climate Change
+The Economics of Corporate Strategy
+The Entrepreneurial Manager
+The Management of Technology
+Business and Climate Change
+Dissertation (MSc Finance and Investment)
+Dissertation (MSc International Business and Emerging Markets)
+Marketing of Services
+Translational Study - Innovation and Entrepreneurship Masterclass (Biz)
+Financial Models and Derivatives in a Legal Context
+Accounting (EMBA)
+Accounting (MBA)
+Accounting and Everyday Life
+Accounting and Financial Management
+Accounting and Social Responsibility
+Accounting, Planning and Strategy
+Advanced Corporate Finance
+Advanced International Financial Reporting
+Advanced Management Accounting
+Analysis of Corporate Financial Information
+Applications of Econometrics
+Baseline-and-Credit Methods and Applications
+Behavioural Finance
+Business Analytics with Heuristics
+Business Analytics with Simulation
+Business Statistics
+Capstone Project (EMBA)
+Carbon Markets
+Carbon and Environmental Accounting
+Carbon and Environmental Consulting Project
+Case Studies in Corporate Finance
+Change Management
+Climate Change and Environmental Policy
+Communication, Governance and Control
+Consultancy Project (MBA)
+Consumer Behaviour
+Contemporary Issues in Management
+Core Competencies for HR Professionals
+Core Competencies for HR Professionals (IHRM)
+Corporate Finance
+Corporate Governance
+Corporate Responsibility & Governance in a Global Context
+Corporate Responsibility and Governance in a Global Context
+Corporate Strategy (MSc)
+Creative Strategy (EMBA)
+Creative Strategy (MBA)
+Credit Risk Management
+Critical Enquiry for Business (EMBA)
+Critical Enquiry for Business (MBA)
+Current Debates in International Business and Emerging Markets
+Current Issues in Accounting
+Data Mining
+Design, Entrepreneurship and Innovation (ODL)
+Developing Knowledge-based International Businesses in Emerging Economies
+Digital Business
+Digital Strategy
+Digital Strategy (MBA)
+Dissertation (Entrepreneurship and Innovation)
+Dissertation (MSc Accounting and Finance)
+Dissertation (MSc Banking and Risk)
+Dissertation (MSc Carbon Finance)
+Dissertation (MSc Finance)
+Dissertation (MSc Financial Management)
+Dissertation (MSc Human Resource Management)
+Dissertation (MSc Marketing and Business Analysis)
+Dissertation (MSc Marketing)
+Dissertation (MSc by Research (Management) Mode C)
+Dissertation (MSc in Business Analytics)
+Dissertation (MSc in Energy Finance and Markets)
+Dissertation (MSc in Management)
+Dissertation - MSc International Human Resource Management
+Doing International Business Projects with Emerging Markets 1
+Doing International Business Projects with Emerging Markets 2
+Econometrics Applications in Banking
+Economic Analysis of Money and Banking
+Economic and Operational Decision Making
+Economics of Strategy (MBA)
+Employment Law
+Energy Finance
+Energy Finance
+Energy Finance and Policy
+Energy and Environmental Markets
+Entrepreneurial Finance
+Entrepreneurial Leadership (EMBA)
+Entrepreneurial Leadership (EMBA)
+Entrepreneurial Leadership (MBA)
+Entrepreneurial Leadership in the Social and Sustainable Enterprise
+Entrepreneurship and New Venture Creation in Context (MSc)
+Equity Valuation
+Final Project (MSc Accounting & Society)
+Finance (EMBA)
+Finance (MBA)
+Financial Accounting
+Financial Analysis
+Financial Analysis (MBA)
+Financial Aspects of Mergers & Acquisitions (MBA)
+Financial Engineering
+Financial Intermediation, Markets and Institutions
+Financial Markets and Investment
+Financial Statement Analysis
+Fixed Income
+Foundations of Econometrics
+Foundations of Finance Theory
+Global Creative Industries
+Global Diversity and Equality Management
+Global Financial Markets and Emerging Economies
+Global Strategic Management: Issues and Perspectives
+Global Strategic Management: Issues and Perspectives (MSc 20cts)
+Global Strategy (MBA)
+Global Talent Management
+HR Issues in Outsourcing
+Human Resource Management
+Human Resource Management In Context
+Industrial Analytics
+Innovation Management and Design Thinking (MBA)
+Innovation Management in Practice
+Innovation-driven Entrepreneurship
+Innovation-driven Entrepreneurship (20 credits)
+Integrated Reporting and Responsible Investment (MBA)
+International Business in Context (MBA)
+International HRM Policies and Practices
+International Marketing Strategy
+Introduction to Financial Accounting
+Introduction to PhD in Management Research
+Introduction to Risk Management in Banks
+Introduction to SAS
+Inventory Analytics
+Investment Management
+Leadership and Management Development
+Leadership and Professional Development (EMBA)
+Leadership and Professional Development (MBA)
+Leadership and Responsibility (EMBA)
+Leadership and Responsibility (MBA)
+Leading Strategic Change (EMBA)
+Low Carbon and Green Investment
+MBA Capstone Project (MBA)
+Management Accounting
+Management Control for Risk and Uncertainty
+Managing Employment Relations
+Managing Innovation in Context
+Managing Stakeholder Communications (MBA)
+Marketing And Society
+Marketing Applications
+Marketing Communications
+Marketing Decision Analysis
+Marketing Management
+Marketing Research
+Marketing in a Digital World
+Media and Web Analytics
+Methods and Tools for Business Analytics
+Methods of Business Research
+Methods of Research
+Methods of Research in HRM
+Modelling Business for Strategic Impact (MBA)
+Multinational Enterprises & Comparative Employment Relations
+Negotiation (MSc)
+Negotiations (MBA)
+New Venture Creation and the Entrepreneurial Process (MBA)
+Operations Improvement (EMBA)
+Operations Improvement (MBA)
+Organisational Behaviour
+Organising for Effectiveness (EMBA)
+Organising for Effectiveness (MBA)
+Organising for Social Change: Strategy, Governance & Innovation
+Outward Investment from Emerging Markets
+Outward Investment from Emerging Markets (20 credit version)
+Performance Analytics with DEA
+Performance Management
+Politics in Accounting
+Predictive Analytics and Modelling of Data
+Prescriptive Analytics with Mathematical Programming
+Principles of Auditing and Reporting
+Principles of Data Analytics
+Principles of Marketing Management
+Problem Solving and Spreadsheet Modelling Skills
+Professional Development (EMBA)
+Professional Development (MBA)
+Project Management (MBA)
+Project Management in Business Analysis
+Psychology of Investing and Financial Decisions (MBA)
+Qualitative Research
+Quantitative Methods and Tools (EMBA)
+Quantitative Methods and Tools (MBA)
+Quantitative Research Methods in Finance
+Research Methods for International Business
+Research Methods for the Capstone Project (EMBA)
+Research Methods for the Capstone Project (MBA)
+Research Methods in Carbon Finance
+Research Methods in Energy
+Reward Management
+Service Innovation
+Service Management
+Service Management (MBA)
+Statistics For Finance
+Strategic Human Resources and the New Economics of Personnel (MBA)
+Strategic Leadership (EMBA)
+Strategic Leadership (MBA)
+Strategic Leadership 1 (EMBA)
+Strategic Leadership 2 (EMBA)
+Strategic Marketing (EMBA)
+Strategic Marketing (MBA)
+Study Abroad Exchange (MBA)
+Study Abroad MBA (50 credits)
+Supervised Reading Course
+Supervised Reading Course in Management 1
+Supervised Reading Course in Management 2
+Supply Chain Analytics with Games
+Technology Entrepreneurship and Commercialisation
+The Accounting Profession
+The Basel Accords and Current Issues in Banking and Risk
+The Entrepreneurial Challenge: Creating a New Venture
+The Entrepreneurial Manager (MSc)
+The Entrepreneurship and Innovation Landscape
+Understanding Brands
+Understanding Economies (EMBA)
+Understanding Economies (MBA)
+Venture Management and Growth in Practice
+Design Thinking

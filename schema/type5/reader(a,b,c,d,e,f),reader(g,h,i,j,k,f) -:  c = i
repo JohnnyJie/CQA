@@ -1,0 +1,4 @@
+reader(a,b,c,d,e,f),reader(g,h,i,j,k,f) -:  c = i
+reader(a,b,c,d,e,f),reader(g,h,i,j,k,f),c <> i -: false 
+
+select * from reader where firstname = '﻿﻿﻿firstnam';

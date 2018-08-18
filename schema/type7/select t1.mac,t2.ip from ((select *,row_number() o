@@ -1,0 +1,25 @@
+
+查询：
+-------1
+map2pk(a,b),map2pk(a,c) -:  b = c
+select * from map2pk where mac = '37:cd:03:9d:96:d2' and ip = '0.0.36.212';
+
+--------2
+map3pk(a,b),map3pk(a,c) -:  b = c
+select * from map3pk where mac = '37:cd:03:9d:96:d2' and ip = '0.0.36.212';
+
+--------3
+map4pk(a,b),map4pk(a,c) -:  b = c
+select * from map4pk where mac = '37:cd:03:9d:96:d2' and ip = '0.0.36.212';
+
+
+
+/****
+select t1.mac,t2.ip from ((select *,row_number() over() rn from map) as t1 
+left join
+(select *,row_number() over() rn from map2) as t2
+on t1.rn = t2.rn)
+;
+
+IP地址基于逻辑，比较灵活，不受硬件限制，也容易记忆。MAC地址在一定程度上与硬件一致，基于物理，能够标识具体。基于MAC地址的这种特点，局域网采用了用MAC地址来标识具体用户的方法。网络管理一般就是在网络层针对IP地址进行管理，但由于一台计算机的IP地址可以由用户自行设定，管理起来相对困难，MAC地址一般不可更改，所以把IP地址同MAC地址组合到一起管理就成为常见的管理方式。
+******/

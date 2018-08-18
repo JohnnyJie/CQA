@@ -1,0 +1,13 @@
+-----db6-1-------
+SELECT * FROM users WHERE email = 'pqrreye.uofvctkk@yahoo.com';
+users(a,b,c,d,e,f),users(g,h,i,j,k,f) -: a=g
+
+-----db6-2-------
+SELECT * FROM users WHERE uid = 56;
+orders(a,b,c,d),users(b,f,g,h,i,j) -: h > 18
+这些订单必须18岁以上顾客买，可能订单有问题或者顾客信息有问题
+
+
+-----db6-3-------
+SELECT * FROM users WHERE uid = 5688;
+orders(a,b,c,d),users(b,f,g,h,i,j),products(c,l,m) -: h > m

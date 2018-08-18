@@ -1,0 +1,13 @@
+employee(a,b,c,d,e,f,g,h),employee(i,j,k,l,m,f,o,p) -:  a=i
+
+----100-----
+select * from employee where salary > 39720；   
+
+----300-----
+select * from employee where salary > 39090
+
+----500-----
+select * from employee where salary > 38450
+
+----1000-----
+select * from employee where salary > 36930
